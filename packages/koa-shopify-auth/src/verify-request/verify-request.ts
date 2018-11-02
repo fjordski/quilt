@@ -21,8 +21,24 @@ export default function verifyRequest({
       session,
     } = ctx;
 
+    session.authRoute = authRoute;
+
     if (session && session.accessToken) {
-      ctx.cookies.set(TOP_LEVEL_OAUTH_COOKIE_NAME);
+      if (!ctx.cookies.get(TEST_COOKIE_NAME)) {
+        console.log('no test cookie');
+        if (ctx.cookies.get(TOP_LEVEL_OAUTH_COOKIE_NAME)) {
+          console.log('top level');
+          // has interacted with top level, can call requestStorageAccess
+          ctx.redirect(`/shopify/auth/enable_cookies?shop=${shop}`);
+          return;
+        } else {
+          console.log('no top level');
+          // has not interacted with top level
+          ctx.redirect(`/shopify/auth/top_level_interaction?shop=${shop}`);
+          return;
+        }
+      }
+
       await next();
       return;
     }

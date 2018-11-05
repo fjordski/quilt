@@ -1,6 +1,5 @@
 (function() {
   if (window.self !== window.parent) {
-    debugger
     return window.top.location.href = window.self.location.href;
   }
 
@@ -11,7 +10,7 @@
   function redirect() {
     sessionStorage.setItem('shopify.top_level_interaction', true);
     document.cookie = 'shopify.top_level_oauth=true';
-    window.location.href = window.shopOrigin + "/admin/apps/" + window.apiKey + '/shopify/auth/enable_cookies';
+    window.location.href = window.shopOrigin + "/admin/apps/" + window.apiKey + '/shopify/auth/enable_cookies?top_level=true';
   }
 
   document.addEventListener('DOMContentLoaded', function() {

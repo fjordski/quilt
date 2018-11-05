@@ -2,7 +2,7 @@ import {readFileSync} from 'fs';
 import {join} from 'path';
 import {Context} from 'koa';
 
-// import Error from './errors';
+import Error from './errors';
 import {OAuthStartOptions} from '../types';
 
 const HEADING = 'Enable cookies';
@@ -22,10 +22,10 @@ export default function createEnableCookies(
     const {query} = ctx;
     const {shop} = query;
 
-    // if (shop == null) {
-    //   ctx.throw(400, Error.ShopParamMissing);
-    //   return;
-    // }
+    if (shop == null) {
+      ctx.throw(400, Error.ShopParamMissing);
+      return;
+    }
 
     ctx.body = `
 <!DOCTYPE html>
